@@ -42,8 +42,6 @@
 .welcome-fallback>i { position: absolute; inset: -3%; border: 1px solid #caacff77; border-radius: 50%; transform: rotateX(60deg) rotateZ(-30deg); }
 .welcome-paused *,.welcome-paused *::before,.welcome-paused *::after { animation-play-state: paused !important; }
 .welcome.welcome-leaving { pointer-events: none; animation: welcome-exit 0.3913s cubic-bezier(.4,0,1,1) both; }
-.welcome-reduced,.welcome-reduced * { animation: none !important; transition: none !important; }
-.welcome-reduced .welcome-haze,.welcome-reduced .welcome-grid { animation: none !important; }
 
 @keyframes welcome-open { from { opacity: 0; } to { opacity: 1; } }
 @keyframes welcome-exit { to { opacity: 0; transform: scale(1.05); filter: blur(5px); } }
@@ -79,9 +77,6 @@
   .welcome-footer { min-height: 74px; padding-top: 10px; padding-bottom: 14px; }
   .welcome-fallback { width: 25vw; left: 68%; top: 24%; }
 }
-@media(prefers-reduced-motion:reduce) {
-  .welcome,.welcome *,.welcome *::before,.welcome *::after { animation: none !important; transition: none !important; }
-}
 
 .welcome:focus{outline:none}
 /* A continuous opening and an iris reveal into the prepared invitation. */
@@ -115,7 +110,5 @@ html:lang(mk) .welcome-act .welcome-degree { font-size: clamp(32px,4.8vw,76px); 
 @keyframes welcome-backdrop-out{0%{opacity:1}45%,100%{opacity:0}}
 @keyframes invitation-arrive{from{opacity:.2;transform:translateY(28px) scale(.975);filter:blur(5px)}to{opacity:1;transform:none;filter:blur(0)}}
 @media(max-width:760px){@keyframes welcome-iris{0%{clip-path:circle(150% at 50% 66%)}100%{clip-path:circle(0% at 50% 66%)}}}
-@media(prefers-reduced-motion:reduce){.welcome::after,.welcome-revealing>.site-header,.welcome-revealing>main,.welcome-revealing>.site-footer{animation:none!important}.welcome-acid{background:none;color:#dcfd51}.welcome.welcome-leaving{clip-path:none}}
 
 @media(max-width:760px) and (min-height:561px){.welcome-copy{top:16%;text-align:left;left:24px;width:calc(100% - 48px)}html:lang(mk) .welcome-act .welcome-invite{font-size:clamp(38px,10.6vw,68px);line-height:1.02}html:lang(mk) .welcome-act .welcome-degree{font-size:clamp(30px,8.4vw,52px);line-height:1.05}html:lang(mk) .welcome-act .welcome-futures{font-size:clamp(24px,6.7vw,42px);line-height:1.15}.welcome-eyebrow{font-size:9px;letter-spacing:.13em;line-height:1.6;margin-bottom:16px}.welcome-acid{text-shadow:0 1px #82962e,0 3px #536019,0 8px 24px #dcfd5118}.welcome-serif{text-shadow:0 2px #402757}}
-

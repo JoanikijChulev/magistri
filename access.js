@@ -14,13 +14,27 @@ for (const type of ['input', 'change']) document.addEventListener(type, event =>
   }
 });
 
+// Force all JavaScript on this page, including the decrypted invitation module,
+// to treat reduced motion as disabled while leaving every other media query intact.
+const nativeMatchMedia = window.matchMedia.bind(window);
+window.matchMedia = query => {
+  const result = nativeMatchMedia(query);
+  if (String(query).replace(/\s+/g, '') !== '(prefers-reduced-motion:reduce)') return result;
+  return new Proxy(result, {
+    get(target, property) {
+      if (property === 'matches') return false;
+      const value = Reflect.get(target, property, target);
+      return typeof value === 'function' ? value.bind(target) : value;
+    }
+  });
+};
+
 const form = document.querySelector('#access-form');
 const input = document.querySelector('#access-password');
 const submit = document.querySelector('#access-submit');
 const feedback = document.querySelector('#access-feedback');
 const mode = document.body.dataset.access;
 const envelope = JSON.parse(document.querySelector('#protected-payload').textContent);
-const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
 let busy = false;
 let opened = false, wasLocked = false;
 let loginStorage;
@@ -133,7 +147,7 @@ form.addEventListener('submit', async event => {
   document.body.classList.remove('access-checking');
   document.body.classList.add('access-approved');
   feedback.textContent = 'На списокот си. Ајде на забава!';
-  if (!reducedMotion.matches) await new Promise(resolve => setTimeout(resolve, 950));
+  await new Promise(resolve => setTimeout(resolve, 950));
   try { await showPage(unlocked.value, unlocked.key, unlocked.kdf); }
   catch {
     // Show no decrypted content if mounting the protected application fails.
